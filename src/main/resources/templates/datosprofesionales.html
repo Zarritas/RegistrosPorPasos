@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Datos profesionales</title>
+</head>
+<body>
+    <form action="/RegistroPorPasos/DatosProfesionales" method="post" th:object="${usuario}">
+        <fieldset>
+            <legend>Datos profesionales</legend>
+            <!------------------------------------------------------------------>
+            <label
+                    th:for="departamento"
+                    th:text="Departamento"
+            />
+            <select
+                    th:field="*{departamento}"
+            >
+                <option
+                        th:each="departamento : ${lista_departamentos}"
+                        th:id="${departamento}"
+                        th:value="${departamento}"
+                        th:text="${departamento}"
+                />
+            </select>
+            <!------------------------------------------------------------------>
+            <br/>
+            <label
+                    th:for="salario"
+            >
+                Nombre
+            </label>
+            <input
+                    type="text"
+                    th:field="*{salario}"
+            />
+            <!------------------------------------------------------------------>
+            <br/>
+            <label th:for="comentarios"></label>
+            <textarea th:field="*{comentarios}">
+            </textarea>
+            <!------------------------------------------------------------------>
+            <br/>
+            <input type="submit" value="Grabar información e ir al paso 3 - Datos bancarios">
+        </fieldset>
+    </form>
+</body>
+</html>

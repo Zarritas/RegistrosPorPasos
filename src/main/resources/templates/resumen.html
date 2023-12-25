@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Resumen</title>
+</head>
+<body>
+    <th:block th:object="${usuario}">
+        <fieldset>
+            <legend>Datos personales</legend>
+            <div th:text="#{etiqueta_nombre}+' '+*{nombre}"></div>
+            <div th:text="#{etiqueta_apellidos}+' '+*{apellidos}"></div>
+            <div th:text="#{etiqueta_fechaNacimiento}+' '+*{fechaNacimiento}"></div>
+            <div th:text="#{etiqueta_nacionalidades}+' '+*{nacionalidades}"></div>
+        </fieldset>
+        <fieldset>
+            <legend>Datos profesionales</legend>
+            <div th:text="#{etiqueta_departamento}+' '+*{departamento}"></div>
+            <div th:text="#{etiqueta_salario}+' '+*{salario}"></div>
+            <div th:text="#{etiqueta_comentarios}+' '+*{comentarios}"></div>
+        </fieldset>
+        <fieldset>
+            <legend>Datos bancarios</legend>
+            <div th:text="#{etiqueta_cuentacorriente}+' '+*{cuentacorriente}"></div>
+        </fieldset>
+        <a href="DatosPersonales">Volver a la pagina principal</a>
+    </th:block>
+</body>
+</html>

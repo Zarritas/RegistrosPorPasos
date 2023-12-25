@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Datos Bancarios</title>
+</head>
+<body>
+    <form action="/RegistroPorPasos/DatosBancarios" method="post" th:object="${usuario}">
+        <fieldset>
+            <legend>Datos personales</legend>
+            <!------------------------------------------------------------------>
+            <label
+                    th:for="cuentacorriente"
+            >
+                Cuenta corriente
+            </label>
+            <input
+                    type="text"
+                    th:field="*{cuentacorriente}"
+            />
+        </fieldset>
+        <input type="submit" value="Grabar información e ir al resumen final"/>
+    </form>
+</body>
+</html>
