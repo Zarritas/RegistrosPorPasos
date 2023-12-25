@@ -1,7 +1,7 @@
 package org.jeslorlim.registrosporpasos.Controller;
 
-import jakarta.servlet.ServletContext;
 import jakarta.servlet.http.HttpSession;
+import org.jeslorlim.registrosporpasos.Model.Colecciones;
 import org.jeslorlim.registrosporpasos.Model.Usuario;
 import org.jeslorlim.registrosporpasos.Service.ServicioImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,8 +11,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import java.util.Enumeration;
 
 @Controller
 @RequestMapping("RegistroPorPasos")
@@ -71,6 +69,11 @@ public class Controlador {
         }
         if (session.getAttribute("DatosBancarios") != null){
             usuario.agrergarDatosBancarios((Usuario) session.getAttribute("DatosBancarios"));
+        }
+        if (session.getAttribute("DatosPersonales") != null ||
+                session.getAttribute("DatosProfesionales") != null ||
+                session.getAttribute("DatosBancarios") != null){
+            Colecciones.agregarUsuario(usuario);
         }
         return "resumen";
     }

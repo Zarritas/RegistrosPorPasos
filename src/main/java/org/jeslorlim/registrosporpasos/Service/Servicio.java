@@ -1,6 +1,5 @@
 package org.jeslorlim.registrosporpasos.Service;
 
-
 import java.util.List;
 
 public interface Servicio {

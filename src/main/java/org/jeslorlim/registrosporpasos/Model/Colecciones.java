@@ -1,10 +1,12 @@
 package org.jeslorlim.registrosporpasos.Model;
 
 import lombok.Getter;
+import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Setter
 public class Colecciones {
     @Getter
     private static final List<String> listaGeneros = new ArrayList<>();
@@ -12,6 +14,8 @@ public class Colecciones {
     private static final List<String> listaDepartamentos = new ArrayList<>();
     @Getter
     private static final List<String> listaNacionalidades = new ArrayList<>();
+    @Getter
+    private static List<Usuario> lista_usuarios = new ArrayList<>();
     static {{
         listaGeneros.add("Masculino");
         listaGeneros.add("Femenino");
@@ -27,4 +31,7 @@ public class Colecciones {
         listaNacionalidades.add("Italiana");
         listaNacionalidades.add("Portuguesa");
     }}
+    public static void agregarUsuario(Usuario usuario){
+        lista_usuarios.add(usuario);
+    }
 }

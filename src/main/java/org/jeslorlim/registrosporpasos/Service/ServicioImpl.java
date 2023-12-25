@@ -1,8 +1,10 @@
 package org.jeslorlim.registrosporpasos.Service;
 
 import org.jeslorlim.registrosporpasos.Model.Colecciones;
+import org.jeslorlim.registrosporpasos.Model.Usuario;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
 import java.util.List;
 
 @Service

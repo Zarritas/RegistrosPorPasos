@@ -3,9 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>Resumen</title>
+    <th:block th:replace="~{/Fragmentos/CssCabecera}"/>
 </head>
 <body>
-    <th:block th:object="${usuario}">
+<th:block th:replace="~{/Fragmentos/cabecera}"/>
+    <form th:object="${usuario}">
         <fieldset>
             <legend>Datos personales</legend>
             <div th:text="#{etiqueta_nombre}+' '+*{nombre}"></div>
@@ -24,6 +26,6 @@
             <div th:text="#{etiqueta_cuentacorriente}+' '+*{cuentacorriente}"></div>
         </fieldset>
         <a href="VueltaInicio">Volver a la pagina principal</a>
-    </th:block>
+    </form>
 </body>
 </html>
