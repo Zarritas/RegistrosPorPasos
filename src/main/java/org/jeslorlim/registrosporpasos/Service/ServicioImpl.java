@@ -3,7 +3,6 @@ package org.jeslorlim.registrosporpasos.Service;
 import org.jeslorlim.registrosporpasos.Model.Colecciones;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service

@@ -1,5 +1,6 @@
 package org.jeslorlim.registrosporpasos.Controller;
 
+import jakarta.servlet.ServletContext;
 import jakarta.servlet.http.HttpSession;
 import org.jeslorlim.registrosporpasos.Model.Usuario;
 import org.jeslorlim.registrosporpasos.Service.ServicioImpl;
@@ -10,6 +11,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.util.Enumeration;
 
 @Controller
 @RequestMapping("RegistroPorPasos")
@@ -25,8 +28,7 @@ public class Controlador {
         return "datospersonales";
     }
     @PostMapping("DatosPersonales")
-    public String datosPersonalesPost(HttpSession session,
-                                      @ModelAttribute("usuario") Usuario usuario){
+    public String datosPersonalesPost(HttpSession session,@ModelAttribute("usuario") Usuario usuario){
         session.setAttribute("DatosPersonales", usuario);
         return "redirect:/RegistroPorPasos/DatosProfesionales";
     }
@@ -38,8 +40,7 @@ public class Controlador {
         return "datosprofesionales";
     }
     @PostMapping("DatosProfesionales")
-    public String datosProfesionalesPost(HttpSession session,
-                                         @ModelAttribute("usuario") Usuario usuario){
+    public String datosProfesionalesPost(HttpSession session,@ModelAttribute("usuario") Usuario usuario){
         session.setAttribute("DatosProfesionales", usuario);
         return "redirect:/RegistroPorPasos/DatosBancarios";
     }
@@ -51,20 +52,31 @@ public class Controlador {
         return "datosbancarios";
     }
     @PostMapping("DatosBancarios")
-    public String datosBancariosPost(HttpSession session,
-                                     @ModelAttribute("usuario") Usuario usuario){
+    public String datosBancariosPost(HttpSession session,@ModelAttribute("usuario") Usuario usuario){
         session.setAttribute("DatosBancarios", usuario);
         return "redirect:/RegistroPorPasos/Resumen";
     }
 //--Resumen---------------------------------------------------------------------------------------
     @GetMapping("Resumen")
     public String resumen(HttpSession session,
-                          Model modelo,
-                          Usuario usuario){
-        usuario.agrergarDatosPersonales((Usuario) session.getAttribute("DatosPersonales"));
-        usuario.agrergarDatosProfesionales((Usuario) session.getAttribute("DatosProfesionales"));
-        usuario.agrergarDatosBancarios((Usuario) session.getAttribute("DatosBancarios"));
-        modelo.addAttribute("usuario", usuario);
+                          @ModelAttribute("usuario") Usuario usuario){
+        if (session.isNew()){
+            return "resumen";
+        }
+        if (session.getAttribute("DatosPersonales") != null){
+            usuario.agrergarDatosPersonales((Usuario) session.getAttribute("DatosPersonales"));
+        }
+        if (session.getAttribute("DatosProfesionales") != null){
+            usuario.agrergarDatosProfesionales((Usuario) session.getAttribute("DatosProfesionales"));
+        }
+        if (session.getAttribute("DatosBancarios") != null){
+            usuario.agrergarDatosBancarios((Usuario) session.getAttribute("DatosBancarios"));
+        }
         return "resumen";
+    }
+    @GetMapping("VueltaInicio")
+    public String vueltaInicio(HttpSession session){
+        session.invalidate();
+        return "redirect:/RegistroPorPasos/DatosPersonales";
     }
 }
