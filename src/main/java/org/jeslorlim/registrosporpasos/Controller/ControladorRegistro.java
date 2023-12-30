@@ -76,15 +76,7 @@ public class ControladorRegistro {
         if (session.isNew()){
             return "Registro/resumen";
         }
-        if (session.getAttribute("DatosUsuario") != null){
-            usuario.agrergarDatosUsuario((Usuario) session.getAttribute("DatosUsuario"));
-        }
-        if (session.getAttribute("DatosPersonales") != null){
-            usuario.agrergarDatosPersonales((Usuario) session.getAttribute("DatosPersonales"));
-        }
-        if (session.getAttribute("DatosProfesionales") != null){
-            usuario.agrergarDatosProfesionales((Usuario) session.getAttribute("DatosProfesionales"));
-        }
+        MetodosVarios.agregarUsuarios(session, usuario);
         if (session.getAttribute("DatosPersonales") != null ||
                 session.getAttribute("DatosProfesionales") != null ||
                 session.getAttribute("DatosUsuario") != null){
@@ -95,6 +87,6 @@ public class ControladorRegistro {
     @GetMapping("VueltaInicio")
     public String vueltaInicio(HttpSession session){
         session.invalidate();
-        return "redirect:/RegistroPorPasos/DatosPersonales";
+        return "redirect:/RegistroPorPasos/DatosUsuario";
     }
 }

@@ -41,8 +41,8 @@ public class Colecciones {
         listaNacionalidades.add("Portuguesa");
     }}
     @Getter
-    private static Map<String,String> Mapa_usuarios = new HashMap<>();
+    private static Map<String,Usuario> Mapa_usuarios = new HashMap<>();
     public static void agregarUsuario(Usuario usuario){
-        Mapa_usuarios.put(usuario.getNombre(), usuario.getClave());
+        Mapa_usuarios.put(usuario.getNombre(), usuario);
     }
 }

@@ -30,5 +30,5 @@ public class ServicioImpl implements Servicio{
     }
 
     @Override
-    public Map<String,String> devuelveUsuarios() {return Colecciones.getMapa_usuarios();}
+    public Map<String,Usuario> devuelveUsuarios() {return Colecciones.getMapa_usuarios();}
 }

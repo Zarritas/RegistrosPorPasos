@@ -11,5 +11,5 @@ public interface Servicio {
     public List<String> devuelveDepartamentos();
     public List<String> devuelveNacionalidades();
     public List<String> devuelveTratamientos();
-    public Map<String,String> devuelveUsuarios();
+    public Map<String,Usuario> devuelveUsuarios();
 }
