@@ -21,4 +21,9 @@ public class ServicioImpl implements Servicio{
     public List<String> devuelveNacionalidades() {
         return Colecciones.getListaNacionalidades();
     }
+
+    @Override
+    public List<String> devuelveTratamientos() {
+        return Colecciones.getListaTratamientos();
+    }
 }

@@ -10,37 +10,51 @@
     <form action="/RegistroPorPasos/DatosPersonales" method="post" th:object="${usuario}">
         <fieldset>
             <legend>Datos personales</legend>
-            <!--Nombre---------------------------------------------------------------->
+            <!--Tratamiento---------------------------------------------------------------->
             <label
-                    th:for="nombre"
-            >
-                Nombre
-            </label>
-            <input
-                    type="text"
-                    th:field="*{nombre}"
+                    th:for="tratamiento_deseado"
+                    th:text="#{etiqueta_tratamiento}"
             />
+            <select
+                    th:field="*{tratamiento_deseado}"
+            >
+                <option
+                        th:each="tratamiento : ${lista_tratamientos}"
+                        th:id="${tratamiento}"
+                        th:value="${tratamiento}"
+                        th:text="${tratamiento}"
+                />
+            </select>
+            <br/>
             <!--Apellidos---------------------------------------------------------------->
             <label
                     th:for="apellidos"
-            >
-                Apellidos
-            </label>
+                    th:text="#{etiqueta_apellidos}"
+            />
             <input
                     type="text"
-                    th:field="*{apellidos}"
+                    th:field="*{apellido}"
             />
             <br/>
             <!--Fecha de nacimiento---------------------------------------------------------------->
             <label
                     th:for="fechaNacimiento"
-            >
-                Fecha de nacimiento
-            </label>
+                    th:text="#{etiqueta_fechaNacimiento}"
+            />
             <input
                     type="text"
                     th:field="*{fechaNacimiento}"
                     placeholder="dd/mm/aaaa"
+            />
+            <br/>
+            <!--Edad---------------------------------------------------------------->
+            <label
+                    th:for="edad"
+                    th:text="#{etiqueta_edad}"
+            />
+            <input
+                    type="text"
+                    th:field="*{edad}"
             />
             <br/>
             <!--Genero---------------------------------------------------------------->
@@ -61,16 +75,28 @@
             </th:block>
             <br/>
             <!--Casado---------------------------------------------------------------->
-            <label th:for="casado" th:text="#{etiqueta_situacion}"/>
-            <input type="checkbox" th:field="*{casado}">
+            <label
+                    th:for="casado"
+                    th:text="#{etiqueta_situacion}"
+            />
+            <input
+                    type="checkbox"
+                    th:field="*{casado}"
+            />
             <!--Hijos---------------------------------------------------------------->
-            <label th:for="hijos" th:text="#{etiqueta_hijos}"/>
-            <input type="checkbox" th:field="*{hijos}">
+            <label
+                    th:for="hijos"
+                    th:text="#{etiqueta_hijos}"
+            />
+            <input
+                    type="checkbox"
+                    th:field="*{hijos}"
+            />
             <br/>
             <!--Nacionalidades---------------------------------------------------------------->
             <label
                     th:for="nacionalidad"
-                    th:text="Nacionalidades"
+                    th:text="#{etiqueta_nacionalidades}"
             />
             <select
                     th:field="*{nacionalidades}"

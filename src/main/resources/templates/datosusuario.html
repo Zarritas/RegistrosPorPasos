@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Datos Bancarios</title>
+    <th:block th:replace="~{/Fragmentos/CssCabecera}"/>
+</head>
+<body>
+<th:block th:replace="~{/Fragmentos/cabecera}"/>
+    <form action="/RegistroPorPasos/DatosUsuario" method="post" th:object="${usuario}">
+        <fieldset>
+            <legend>Datos Usuario</legend>
+            <!------------------------------------------------------------------>
+            <label
+                    th:for="nombre"
+            >
+                Nombre
+            </label>
+            <input
+                    type="text"
+                    th:field="*{nombre}"
+            />
+            <br/>
+            <label
+                    th:for="clave"
+            >
+                Clave
+            </label>
+            <input
+                    type="password"
+                    th:field="*{clave}"
+            />
+            <br/>
+            <label
+                    th:for="confirmarClave"
+            >
+                Confirmar Clave
+            </label>
+            <input
+                    type="text"
+                    th:field="*{confirmarClave}"
+            />
+        </fieldset>
+        <input type="submit" value="Grabar información e ir al resumen final"/>
+    </form>
+</body>
+</html>

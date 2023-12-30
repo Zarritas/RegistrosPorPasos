@@ -13,7 +13,7 @@
             <!------------------------------------------------------------------>
             <label
                     th:for="departamento"
-                    th:text="Departamento"
+                    th:text="#{etiqueta_departamento}"
             />
             <select
                     th:field="*{departamento}"
@@ -29,16 +29,18 @@
             <br/>
             <label
                     th:for="salario"
-            >
-                Nombre
-            </label>
+                    th:text="#{etiqueta_salario}"
+            />
             <input
                     type="text"
                     th:field="*{salario}"
             />
             <!------------------------------------------------------------------>
             <br/>
-            <label th:for="comentarios"></label>
+            <label
+                    th:for="comentarios"
+                    th:text="#{etiqueta_comentarios}"
+            />
             <textarea th:field="*{comentarios}">
             </textarea>
             <!------------------------------------------------------------------>

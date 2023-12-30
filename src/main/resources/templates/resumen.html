@@ -11,7 +11,7 @@
         <fieldset>
             <legend>Datos personales</legend>
             <div th:text="#{etiqueta_nombre}+' '+*{nombre}"></div>
-            <div th:text="#{etiqueta_apellidos}+' '+*{apellidos}"></div>
+            <div th:text="#{etiqueta_apellidos}+' '+*{getApellido}"></div>
             <div th:text="#{etiqueta_fechaNacimiento}+' '+*{fechaNacimiento}"></div>
             <div th:text="#{etiqueta_nacionalidades}+' '+*{nacionalidades}"></div>
         </fieldset>

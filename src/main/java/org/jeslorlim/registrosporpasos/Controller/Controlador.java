@@ -17,12 +17,25 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class Controlador {
     @Autowired
     ServicioImpl mi_servicio;
+
+//--Datos Usuario-------------------------------------------------------------------------------
+    @GetMapping("DatosUsuario")
+    public String datosUsuarioGet(@ModelAttribute("usuario") Usuario usuario){
+        return "datosusuario";
+    }
+    @PostMapping("DatosUsuario")
+    public String datosUsuarioPost(HttpSession session, @ModelAttribute("usuario") Usuario usuario){
+        session.setAttribute("DatosUsuario", usuario);
+        return "redirect:/RegistroPorPasos/DataPersonales";
+    }
+
 //--Datos Personales------------------------------------------------------------------------------
     @GetMapping("DatosPersonales")
     public String datosPersonalesGet(Model modelo,
                                      @ModelAttribute("usuario") Usuario usuario){
         modelo.addAttribute("lista_generos",mi_servicio.devuelveGeneros());
         modelo.addAttribute("lista_nacionalidades",mi_servicio.devuelveNacionalidades());
+        modelo.addAttribute("lista_tratamientos",mi_servicio.devuelveTratamientos());
         return "datospersonales";
     }
     @PostMapping("DatosPersonales")
@@ -30,6 +43,7 @@ public class Controlador {
         session.setAttribute("DatosPersonales", usuario);
         return "redirect:/RegistroPorPasos/DatosProfesionales";
     }
+
 //--Datos Profesionales---------------------------------------------------------------------------
     @GetMapping("DatosProfesionales")
     public String datosProfesionalesGet(Model modelo,
@@ -40,20 +54,9 @@ public class Controlador {
     @PostMapping("DatosProfesionales")
     public String datosProfesionalesPost(HttpSession session,@ModelAttribute("usuario") Usuario usuario){
         session.setAttribute("DatosProfesionales", usuario);
-        return "redirect:/RegistroPorPasos/DatosBancarios";
-    }
-//--Datos Bancarios-------------------------------------------------------------------------------
-    @GetMapping("DatosBancarios")
-    public String datosBancariosGet(Model modelo,
-                                    @ModelAttribute("usuario") Usuario usuario){
-        modelo.addAttribute("cuenta","cuenta");
-        return "datosbancarios";
-    }
-    @PostMapping("DatosBancarios")
-    public String datosBancariosPost(HttpSession session,@ModelAttribute("usuario") Usuario usuario){
-        session.setAttribute("DatosBancarios", usuario);
         return "redirect:/RegistroPorPasos/Resumen";
     }
+
 //--Resumen---------------------------------------------------------------------------------------
     @GetMapping("Resumen")
     public String resumen(HttpSession session,
@@ -61,18 +64,18 @@ public class Controlador {
         if (session.isNew()){
             return "resumen";
         }
+        if (session.getAttribute("DatosUsuario") != null){
+            usuario.agrergarDatosUsuario((Usuario) session.getAttribute("DatosUsuario"));
+        }
         if (session.getAttribute("DatosPersonales") != null){
             usuario.agrergarDatosPersonales((Usuario) session.getAttribute("DatosPersonales"));
         }
         if (session.getAttribute("DatosProfesionales") != null){
             usuario.agrergarDatosProfesionales((Usuario) session.getAttribute("DatosProfesionales"));
         }
-        if (session.getAttribute("DatosBancarios") != null){
-            usuario.agrergarDatosBancarios((Usuario) session.getAttribute("DatosBancarios"));
-        }
         if (session.getAttribute("DatosPersonales") != null ||
                 session.getAttribute("DatosProfesionales") != null ||
-                session.getAttribute("DatosBancarios") != null){
+                session.getAttribute("DatosUsuario") != null){
             Colecciones.agregarUsuario(usuario);
         }
         return "resumen";

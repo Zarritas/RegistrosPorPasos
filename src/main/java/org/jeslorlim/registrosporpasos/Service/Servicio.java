@@ -7,4 +7,6 @@ public interface Servicio {
     public List<String> devuelveGeneros();
     public List<String> devuelveDepartamentos();
     public List<String> devuelveNacionalidades();
+
+    public List<String> devuelveTratamientos();
 }
