@@ -6,10 +6,10 @@
     <th:block th:replace="~{/Fragmentos/CssCabecera}"/>
 </head>
 <body>
-<th:block th:replace="~{/Fragmentos/cabecera}"/>
+<th:block th:replace="~{/Fragmentos/cabeceraRegistro}"/>
     <form action="/RegistroPorPasos/DatosPersonales" method="post" th:object="${usuario}">
         <fieldset>
-            <legend>Datos personales</legend>
+            <legend>Datos Personales</legend>
             <!--Tratamiento---------------------------------------------------------------->
             <label
                     th:for="tratamiento_deseado"
@@ -28,7 +28,7 @@
             <br/>
             <!--Apellidos---------------------------------------------------------------->
             <label
-                    th:for="apellidos"
+                    th:for="apellido"
                     th:text="#{etiqueta_apellidos}"
             />
             <input
@@ -58,7 +58,9 @@
             />
             <br/>
             <!--Genero---------------------------------------------------------------->
-            <th:block th:text="#{etiqueta_genero}"/>
+            <th:block
+                    th:text="#{etiqueta_genero}"
+            />
             <th:block
                     th:each="genero : ${lista_generos}"
             >
@@ -76,16 +78,17 @@
             <br/>
             <!--Casado---------------------------------------------------------------->
             <label
-                    th:for="casado"
+                    th:for="casado1"
                     th:text="#{etiqueta_situacion}"
             />
             <input
                     type="checkbox"
                     th:field="*{casado}"
             />
+            <br/>
             <!--Hijos---------------------------------------------------------------->
             <label
-                    th:for="hijos"
+                    th:for="hijos1"
                     th:text="#{etiqueta_hijos}"
             />
             <input
@@ -95,7 +98,7 @@
             <br/>
             <!--Nacionalidades---------------------------------------------------------------->
             <label
-                    th:for="nacionalidad"
+                    th:for="nacionalidades"
                     th:text="#{etiqueta_nacionalidades}"
             />
             <select
@@ -111,8 +114,8 @@
             </select>
             <br/>
             <!------------------------------------------------------------------>
-            <input type="submit" value="Grabar información e ir al paso 2 - Datos profesionales">
         </fieldset>
+        <input type="submit" value="Grabar información e ir al paso 3 - Datos profesionales">
     </form>
 </body>
 </html>

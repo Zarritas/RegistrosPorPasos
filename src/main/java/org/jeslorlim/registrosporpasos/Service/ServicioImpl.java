@@ -1,9 +1,11 @@
 package org.jeslorlim.registrosporpasos.Service;
 
 import org.jeslorlim.registrosporpasos.Model.Colecciones;
+import org.jeslorlim.registrosporpasos.Model.Usuario;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class ServicioImpl implements Servicio{
@@ -26,4 +28,7 @@ public class ServicioImpl implements Servicio{
     public List<String> devuelveTratamientos() {
         return Colecciones.getListaTratamientos();
     }
+
+    @Override
+    public Map<String,String> devuelveUsuarios() {return Colecciones.getMapa_usuarios();}
 }

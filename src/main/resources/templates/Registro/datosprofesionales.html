@@ -6,10 +6,10 @@
     <th:block th:replace="~{/Fragmentos/CssCabecera}"/>
 </head>
 <body>
-<th:block th:replace="~{/Fragmentos/cabecera}"/>
+<th:block th:replace="~{/Fragmentos/cabeceraRegistro}"/>
     <form action="/RegistroPorPasos/DatosProfesionales" method="post" th:object="${usuario}">
         <fieldset>
-            <legend>Datos profesionales</legend>
+            <legend>Datos Profesionales</legend>
             <!------------------------------------------------------------------>
             <label
                     th:for="departamento"
@@ -45,8 +45,8 @@
             </textarea>
             <!------------------------------------------------------------------>
             <br/>
-            <input type="submit" value="Grabar información e ir al paso 3 - Datos bancarios">
         </fieldset>
+        <input type="submit" value="Grabar información e ir al resumen">
     </form>
 </body>
 </html>

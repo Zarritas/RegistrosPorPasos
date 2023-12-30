@@ -6,16 +6,15 @@
     <th:block th:replace="~{/Fragmentos/CssCabecera}"/>
 </head>
 <body>
-<th:block th:replace="~{/Fragmentos/cabecera}"/>
+<th:block th:replace="~{/Fragmentos/cabeceraRegistro}"/>
     <form action="/RegistroPorPasos/DatosUsuario" method="post" th:object="${usuario}">
         <fieldset>
             <legend>Datos Usuario</legend>
             <!------------------------------------------------------------------>
             <label
                     th:for="nombre"
-            >
-                Nombre
-            </label>
+                    th:text="#{etiqueta_nombre}"
+            />
             <input
                     type="text"
                     th:field="*{nombre}"
@@ -23,9 +22,8 @@
             <br/>
             <label
                     th:for="clave"
-            >
-                Clave
-            </label>
+                    th:text="#{etiqueta_clave}"
+            />
             <input
                     type="password"
                     th:field="*{clave}"
@@ -33,15 +31,14 @@
             <br/>
             <label
                     th:for="confirmarClave"
-            >
-                Confirmar Clave
-            </label>
+                    th:text="#{etiqueta_confirmarClave}"
+            />
             <input
-                    type="text"
+                    type="password"
                     th:field="*{confirmarClave}"
             />
         </fieldset>
-        <input type="submit" value="Grabar información e ir al resumen final"/>
+        <input type="submit" value="Grabar información e ir al paso 2 - Datos personales"/>
     </form>
 </body>
 </html>

@@ -14,32 +14,40 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("RegistroPorPasos")
-public class Controlador {
+public class ControladorRegistro {
     @Autowired
     ServicioImpl mi_servicio;
 
 //--Datos Usuario-------------------------------------------------------------------------------
     @GetMapping("DatosUsuario")
-    public String datosUsuarioGet(@ModelAttribute("usuario") Usuario usuario){
-        return "datosusuario";
+    public String datosUsuarioGet(HttpSession session,
+                                  @ModelAttribute("usuario") Usuario usuario){
+        if (session.getAttribute("DatosUsuario") != null)
+            usuario.agrergarDatosUsuario((Usuario) session.getAttribute("DatosUsuario"));
+        return "Registro/datosusuario";
     }
     @PostMapping("DatosUsuario")
-    public String datosUsuarioPost(HttpSession session, @ModelAttribute("usuario") Usuario usuario){
+    public String datosUsuarioPost(HttpSession session,
+                                   @ModelAttribute("usuario") Usuario usuario){
         session.setAttribute("DatosUsuario", usuario);
-        return "redirect:/RegistroPorPasos/DataPersonales";
+        return "redirect:/RegistroPorPasos/DatosPersonales";
     }
 
 //--Datos Personales------------------------------------------------------------------------------
     @GetMapping("DatosPersonales")
     public String datosPersonalesGet(Model modelo,
+                                     HttpSession session,
                                      @ModelAttribute("usuario") Usuario usuario){
         modelo.addAttribute("lista_generos",mi_servicio.devuelveGeneros());
         modelo.addAttribute("lista_nacionalidades",mi_servicio.devuelveNacionalidades());
         modelo.addAttribute("lista_tratamientos",mi_servicio.devuelveTratamientos());
-        return "datospersonales";
+        if (session.getAttribute("DatosPersonales") != null)
+            usuario.agrergarDatosPersonales((Usuario) session.getAttribute("DatosPersonales"));
+        return "Registro/datospersonales";
     }
     @PostMapping("DatosPersonales")
-    public String datosPersonalesPost(HttpSession session,@ModelAttribute("usuario") Usuario usuario){
+    public String datosPersonalesPost(HttpSession session,
+                                      @ModelAttribute("usuario") Usuario usuario){
         session.setAttribute("DatosPersonales", usuario);
         return "redirect:/RegistroPorPasos/DatosProfesionales";
     }
@@ -47,12 +55,16 @@ public class Controlador {
 //--Datos Profesionales---------------------------------------------------------------------------
     @GetMapping("DatosProfesionales")
     public String datosProfesionalesGet(Model modelo,
+                                        HttpSession session,
                                         @ModelAttribute("usuario") Usuario usuario){
         modelo.addAttribute("lista_departamentos",mi_servicio.devuelveDepartamentos());
-        return "datosprofesionales";
+        if (session.getAttribute("DatosProfesionales") != null)
+            usuario.agrergarDatosProfesionales((Usuario) session.getAttribute("DatosProfesionales"));
+        return "Registro/datosprofesionales";
     }
     @PostMapping("DatosProfesionales")
-    public String datosProfesionalesPost(HttpSession session,@ModelAttribute("usuario") Usuario usuario){
+    public String datosProfesionalesPost(HttpSession session,
+                                         @ModelAttribute("usuario") Usuario usuario){
         session.setAttribute("DatosProfesionales", usuario);
         return "redirect:/RegistroPorPasos/Resumen";
     }
@@ -62,7 +74,7 @@ public class Controlador {
     public String resumen(HttpSession session,
                           @ModelAttribute("usuario") Usuario usuario){
         if (session.isNew()){
-            return "resumen";
+            return "Registro/resumen";
         }
         if (session.getAttribute("DatosUsuario") != null){
             usuario.agrergarDatosUsuario((Usuario) session.getAttribute("DatosUsuario"));
@@ -78,7 +90,7 @@ public class Controlador {
                 session.getAttribute("DatosUsuario") != null){
             Colecciones.agregarUsuario(usuario);
         }
-        return "resumen";
+        return "Registro/resumen";
     }
     @GetMapping("VueltaInicio")
     public String vueltaInicio(HttpSession session){

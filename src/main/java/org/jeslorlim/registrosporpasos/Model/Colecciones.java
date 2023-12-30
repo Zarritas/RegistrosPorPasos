@@ -4,7 +4,9 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Setter
 public class Colecciones {
@@ -39,8 +41,8 @@ public class Colecciones {
         listaNacionalidades.add("Portuguesa");
     }}
     @Getter
-    private static List<Usuario> lista_usuarios = new ArrayList<>();
+    private static Map<String,String> Mapa_usuarios = new HashMap<>();
     public static void agregarUsuario(Usuario usuario){
-        lista_usuarios.add(usuario);
+        Mapa_usuarios.put(usuario.getNombre(), usuario.getClave());
     }
 }

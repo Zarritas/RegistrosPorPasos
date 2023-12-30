@@ -6,13 +6,19 @@
     <th:block th:replace="~{/Fragmentos/CssCabecera}"/>
 </head>
 <body>
-<th:block th:replace="~{/Fragmentos/cabecera}"/>
+<th:block th:replace="~{/Fragmentos/cabeceraRegistro}"/>
     <form th:object="${usuario}">
         <fieldset>
-            <legend>Datos personales</legend>
+            <legend>Datos Usuario</legend>
             <div th:text="#{etiqueta_nombre}+' '+*{nombre}"></div>
+            <div th:text="#{etiqueta_clave}+' '+*{clave}"></div>
+        </fieldset>
+        <fieldset>
+            <legend>Datos personales</legend>
+            <div th:text="#{etiqueta_tratamiento}+' '+*{tratamiento_deseado}"></div>
             <div th:text="#{etiqueta_apellidos}+' '+*{getApellido}"></div>
             <div th:text="#{etiqueta_fechaNacimiento}+' '+*{fechaNacimiento}"></div>
+            <div th:text="#{etiqueta_edad}+' '+*{edad}"></div>
             <div th:text="#{etiqueta_nacionalidades}+' '+*{nacionalidades}"></div>
         </fieldset>
         <fieldset>
@@ -21,10 +27,7 @@
             <div th:text="#{etiqueta_salario}+' '+*{salario}"></div>
             <div th:text="#{etiqueta_comentarios}+' '+*{comentarios}"></div>
         </fieldset>
-        <fieldset>
-            <legend>Datos bancarios</legend>
-            <div th:text="#{etiqueta_cuentacorriente}+' '+*{cuentacorriente}"></div>
-        </fieldset>
+
         <a href="VueltaInicio">Volver a la pagina principal</a>
     </form>
 </body>
