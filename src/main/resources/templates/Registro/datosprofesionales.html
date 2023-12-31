@@ -25,8 +25,8 @@
                         th:text="${departamento}"
                 />
             </select>
-            <!------------------------------------------------------------------>
             <br/>
+            <!------------------------------------------------------------------>
             <label
                     th:for="salario"
                     th:text="#{etiqueta_salario}"
@@ -35,15 +35,17 @@
                     type="text"
                     th:field="*{salario}"
             />
-            <!------------------------------------------------------------------>
+            <th:block th:each="error : ${#fields.errors('salario')}" class="error">
+                <span th:text="${error}+' '" class="error"/>
+            </th:block>
             <br/>
+            <!------------------------------------------------------------------>
             <label
                     th:for="comentarios"
                     th:text="#{etiqueta_comentarios}"
             />
             <textarea th:field="*{comentarios}">
             </textarea>
-            <!------------------------------------------------------------------>
             <br/>
         </fieldset>
         <input type="submit" value="Grabar información e ir al resumen">

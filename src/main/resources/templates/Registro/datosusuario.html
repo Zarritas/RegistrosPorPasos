@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:Th="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
     <title>Datos Bancarios</title>
@@ -19,6 +19,9 @@
                     type="text"
                     th:field="*{nombre}"
             />
+            <th:block th:each="error : ${#fields.errors('nombre')}" class="error">
+                <span th:text="${error}+' '" class="error"/>
+            </th:block>
             <br/>
             <label
                     th:for="clave"
@@ -37,6 +40,9 @@
                     type="password"
                     th:field="*{confirmarClave}"
             />
+            <th:block th:each="error : ${#fields.errors('clave')}" class="error">
+                <span th:text="${error}+' '" class="error"/>
+            </th:block>
         </fieldset>
         <input type="submit" value="Grabar información e ir al paso 2 - Datos personales"/>
     </form>

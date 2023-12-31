@@ -46,6 +46,9 @@
                     th:field="*{fechaNacimiento}"
                     placeholder="dd/mm/aaaa"
             />
+            <th:block th:each="error : ${#fields.errors('fechaNacimiento')}" class="error">
+                <span th:text="${error}+' '" class="error"/>
+            </th:block>
             <br/>
             <!--Edad---------------------------------------------------------------->
             <label
@@ -112,6 +115,9 @@
                         th:text="${pais}"
                 />
             </select>
+            <th:block th:each="error : ${#fields.errors('nacionalidades')}" class="error">
+                <span th:text="${error}+' '" class="error"/>
+            </th:block>
             <br/>
             <!------------------------------------------------------------------>
         </fieldset>

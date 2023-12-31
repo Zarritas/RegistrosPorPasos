@@ -21,23 +21,26 @@ public interface MetodosVarios {
     }
 
     public static String comprobarCookie(String contenido, HttpSession session) {
-        ArrayList<String> partes = new ArrayList<>(List.of(contenido.split("#")));
+        String[] partes = contenido.split("#");
+        String parteAux="";
         String contenidoAux="";
-        for (String parte : partes) {
-            String[] datos = parte.split(":");
-            if (!session.getAttribute("usuario").equals(datos[0])) {
-                partes.add(session.getAttribute("usuario") + ":1");
-                session.setAttribute((String) session.getAttribute("usuario"), 1);
-            }else{
+        for (int i = 0; i < partes.length; i++) {
+            String[] datos = partes[i].split(":");
+            if (session.getAttribute("usuario").equals(datos[0])) {
                 datos[1] = String.valueOf(Integer.parseInt(datos[1]) + 1);
                 session.setAttribute((String) session.getAttribute("usuario"), datos[1]);
-                partes.remove(parte);
-                partes.add( datos[0] + ":" + datos[1]);
+                partes[i] = datos[0] + ":" + datos[1];
+            }else {
+                parteAux = session.getAttribute("usuario") + ":1"; ;
+                session.setAttribute((String) session.getAttribute("usuario"), 1);
             }
-            break;
         }
-        for (String parte : partes) {
-            contenidoAux += parte + "#";
+        if (parteAux.isEmpty()) {
+            for (String parte : partes) {
+                contenidoAux += parte + "#";
+            }
+        }else{
+            contenidoAux = contenido + parteAux + "#";
         }
         return contenidoAux;
     }
