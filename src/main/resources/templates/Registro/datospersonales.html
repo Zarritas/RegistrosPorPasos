@@ -3,125 +3,157 @@
 <head>
     <meta charset="UTF-8">
     <title>Datos personales</title>
-    <th:block th:replace="~{/Fragmentos/CssCabecera}"/>
+    <th:block
+            th:replace="~{/Fragmentos/CssCabecera}"
+    />
 </head>
 <body>
-<th:block th:replace="~{/Fragmentos/cabeceraRegistro}"/>
-    <form action="/RegistroPorPasos/DatosPersonales" method="post" th:object="${usuario}">
-        <fieldset>
-            <legend>Datos Personales</legend>
-            <!--Tratamiento---------------------------------------------------------------->
-            <label
-                    th:for="tratamiento_deseado"
-                    th:text="#{etiqueta_tratamiento}"
+<th:block
+        th:replace="~{/Fragmentos/cabeceraRegistro}"
+/>
+<form
+        action="/RegistroPorPasos/DatosPersonales"
+        method="post"
+        th:object="${usuario}"
+>
+    <fieldset>
+        <legend>Datos Personales</legend>
+        <!--Tratamiento---------------------------------------------------------------->
+        <label
+                th:for="tratamiento_deseado"
+                th:text="#{etiqueta_tratamiento}"
+        />
+        <select
+                th:field="*{tratamiento_deseado}"
+        >
+            <option
+                    th:each="tratamiento : ${lista_tratamientos}"
+                    th:id="${tratamiento}"
+                    th:value="${tratamiento}"
+                    th:text="${tratamiento}"
             />
-            <select
-                    th:field="*{tratamiento_deseado}"
-            >
-                <option
-                        th:each="tratamiento : ${lista_tratamientos}"
-                        th:id="${tratamiento}"
-                        th:value="${tratamiento}"
-                        th:text="${tratamiento}"
-                />
-            </select>
-            <br/>
-            <!--Apellidos---------------------------------------------------------------->
+        </select>
+        <br/>
+        <!--Apellidos---------------------------------------------------------------->
+        <label
+                th:for="apellido"
+                th:text="#{etiqueta_apellidos}"
+        />
+        <input
+                type="text"
+                th:field="*{apellido}"
+        />
+        <br/>
+        <!--Fecha de nacimiento---------------------------------------------------------------->
+        <label
+                th:for="fechaNacimiento"
+                th:text="#{etiqueta_fechaNacimiento}"
+        />
+        <input
+                type="text"
+                th:field="*{fechaNacimiento}"
+                placeholder="dd/mm/aaaa"
+        />
+        <th:block
+                th:each="error : ${#fields.errors('fechaNacimiento')}"
+                class="error"
+        >
+            <span
+                    th:text="${error}+' '"
+                    class="error"
+            />
+        </th:block>
+        <br/>
+        <!--Edad---------------------------------------------------------------->
+        <label
+                th:for="edad"
+                th:text="#{etiqueta_edad}"
+        />
+        <input
+                type="text"
+                th:field="*{edad}"
+        />
+        <th:block
+                th:each="error : ${#fields.errors('edad')}"
+                class="error"
+        >
+            <span
+                    th:text="${error}+' '"
+                    class="error"
+            />
+        </th:block>
+        <br/>
+        <!--Genero---------------------------------------------------------------->
+        <th:block
+                th:text="#{etiqueta_genero}"
+        />
+        <th:block
+                th:each="genero : ${lista_generos}"
+        >
             <label
-                    th:for="apellido"
-                    th:text="#{etiqueta_apellidos}"
+                    th:text="${genero}"
+                    th:for="${genero}"
             />
             <input
-                    type="text"
-                    th:field="*{apellido}"
+                    type="radio"
+                    th:field="*{genero}"
+                    th:id="${genero}"
+                    th:value="${genero}"
             />
-            <br/>
-            <!--Fecha de nacimiento---------------------------------------------------------------->
-            <label
-                    th:for="fechaNacimiento"
-                    th:text="#{etiqueta_fechaNacimiento}"
+        </th:block>
+        <br/>
+        <!--Casado---------------------------------------------------------------->
+        <label
+                th:for="casado1"
+                th:text="#{etiqueta_situacion}"
+        />
+        <input
+                type="checkbox"
+                th:field="*{casado}"
+        />
+        <br/>
+        <!--Hijos---------------------------------------------------------------->
+        <label
+                th:for="hijos1"
+                th:text="#{etiqueta_hijos}"
+        />
+        <input
+                type="checkbox"
+                th:field="*{hijos}"
+        />
+        <br/>
+        <!--Nacionalidades---------------------------------------------------------------->
+        <label
+                th:for="nacionalidades"
+                th:text="#{etiqueta_nacionalidades}"
+        />
+        <select
+                th:field="*{nacionalidades}"
+                multiple = "multiple"
+        >
+            <option
+                    th:each="pais : ${lista_nacionalidades}"
+                    th:id="${pais}"
+                    th:value="${pais}"
+                    th:text="${pais}"
             />
-            <input
-                    type="text"
-                    th:field="*{fechaNacimiento}"
-                    placeholder="dd/mm/aaaa"
+        </select>
+        <th:block
+                th:each="error : ${#fields.errors('nacionalidades')}"
+                class="error"
+        >
+            <span
+                    th:text="${error}+' '"
+                    class="error"
             />
-            <th:block th:each="error : ${#fields.errors('fechaNacimiento')}" class="error">
-                <span th:text="${error}+' '" class="error"/>
-            </th:block>
-            <br/>
-            <!--Edad---------------------------------------------------------------->
-            <label
-                    th:for="edad"
-                    th:text="#{etiqueta_edad}"
-            />
-            <input
-                    type="text"
-                    th:field="*{edad}"
-            />
-            <br/>
-            <!--Genero---------------------------------------------------------------->
-            <th:block
-                    th:text="#{etiqueta_genero}"
-            />
-            <th:block
-                    th:each="genero : ${lista_generos}"
-            >
-                <label
-                        th:text="${genero}"
-                        th:for="${genero}"
-                />
-                <input
-                        type="radio"
-                        th:field="*{genero}"
-                        th:id="${genero}"
-                        th:value="${genero}"
-                />
-            </th:block>
-            <br/>
-            <!--Casado---------------------------------------------------------------->
-            <label
-                    th:for="casado1"
-                    th:text="#{etiqueta_situacion}"
-            />
-            <input
-                    type="checkbox"
-                    th:field="*{casado}"
-            />
-            <br/>
-            <!--Hijos---------------------------------------------------------------->
-            <label
-                    th:for="hijos1"
-                    th:text="#{etiqueta_hijos}"
-            />
-            <input
-                    type="checkbox"
-                    th:field="*{hijos}"
-            />
-            <br/>
-            <!--Nacionalidades---------------------------------------------------------------->
-            <label
-                    th:for="nacionalidades"
-                    th:text="#{etiqueta_nacionalidades}"
-            />
-            <select
-                    th:field="*{nacionalidades}"
-                    multiple = "multiple"
-            >
-                <option
-                        th:each="pais : ${lista_nacionalidades}"
-                        th:id="${pais}"
-                        th:value="${pais}"
-                        th:text="${pais}"
-                />
-            </select>
-            <th:block th:each="error : ${#fields.errors('nacionalidades')}" class="error">
-                <span th:text="${error}+' '" class="error"/>
-            </th:block>
-            <br/>
-            <!------------------------------------------------------------------>
-        </fieldset>
-        <input type="submit" value="Grabar información e ir al paso 3 - Datos profesionales">
-    </form>
+        </th:block>
+        <br/>
+        <!------------------------------------------------------------------>
+    </fieldset>
+    <input
+            type="submit"
+            value="Grabar información e ir al paso 3 - Datos profesionales"
+    />
+</form>
 </body>
 </html>

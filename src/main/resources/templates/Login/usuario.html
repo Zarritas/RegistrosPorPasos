@@ -2,17 +2,48 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
-    <th:block th:replace="~{/Fragmentos/CssCabecera}"/>
+    <title>Login</title>
+    <th:block
+            th:replace="~{/Fragmentos/CssCabecera}"
+    />
 </head>
 <body>
-<th:block th:replace="~{/Fragmentos/cabeceraLogin}"/>
-<h1>Autenticación</h1>
-<form action="/InicioSesion/Usuario" method="post">
-    <label for="usuario">Usuario</label>
-    <input type="text" name="usuario" id="usuario">
-    <input type="submit" value="Siguente">
+<th:block
+        th:replace="~{/Fragmentos/cabeceraLogin}"
+/>
+<h1>
+    Autenticación
+</h1>
+<form
+        action="/InicioSesion/Usuario"
+        method="post"
+>
+    <label
+            for="usuario"
+            th:text="#{etiqueta_nombre}"
+    />
+    <input
+            type="text"
+            name="usuario"
+            id="usuario"
+    />
+    <br/>
+    <select
+            th:name="usuarios_registrados"
+            th:id="usuarios_registrados"
+    >
+        <option
+                th:each="usuario : ${usuarios_registrados}"
+                th:id="${usuario}"
+                th:value="${usuario}"
+                th:text="${usuario}"
+        />
+    </select>
+    <br/>
+    <input
+            type="submit"
+            value="Siguente"
+    />
 </form>
-
 </body>
 </html>

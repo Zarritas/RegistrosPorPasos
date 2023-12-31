@@ -2,15 +2,52 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
-    <th:block th:replace="~{/Fragmentos/CssCabecera}"/>
+    <title>Area Personal</title>
+    <th:block
+            th:replace="~{/Fragmentos/CssCabecera}"
+    />
 </head>
 <body>
-<a href="/InicioSesion/Usuario"><img th:src="@{/imagenes/logout.jpg}" alt="Cerrar sesion"></a>
-<h1>Área personal</h1>
-<div th:object="${usuario}">
-    <p>Bienvenido <b><th:block th:text="*{nombre}"/> <th:block th:text="*{apellido}"/></b> (Usuario <b><th:block th:text="*{nombre}"/></b>)</p>
-    <p>Nº de autenticaciones validads: <b><th:block th:text="${contador}"/></b></p>
+<a
+        href="/InicioSesion/Usuario"
+>
+    <img
+            th:src="@{/imagenes/logout.jpg}"
+            alt="Cerrar sesion"
+    />
+</a>
+<h1>
+    Área personal
+</h1>
+<div
+        th:object="${usuario}"
+>
+    <p>
+        Bienvenido
+        <b>
+            <th:block
+                    th:text="*{nombre}"
+            />
+            <th:block
+                    th:text="*{apellido}"
+            />
+        </b>
+        (Usuario
+        <b>
+            <th:block
+                    th:text="*{nombre}"
+            />
+        </b>
+        )
+    </p>
+    <p>
+        Nº de autenticaciones validads:
+        <b>
+            <th:block
+                    th:text="${contador}"
+            />
+        </b>
+    </p>
 </div>
 </body>
 </html>

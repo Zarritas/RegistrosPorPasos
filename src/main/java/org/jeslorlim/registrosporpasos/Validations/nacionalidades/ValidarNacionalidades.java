@@ -8,6 +8,9 @@ public class ValidarNacionalidades implements ConstraintValidator<AlmenosDos, Ar
 
     @Override
     public boolean isValid(ArrayList<String> nacionalidad, ConstraintValidatorContext context) {
+        if (nacionalidad == null) {
+            return false;
+        }
         return nacionalidad.size() >= 2;
     }
 }

@@ -3,52 +3,73 @@
 <head>
     <meta charset="UTF-8">
     <title>Datos profesionales</title>
-    <th:block th:replace="~{/Fragmentos/CssCabecera}"/>
+    <th:block
+            th:replace="~{/Fragmentos/CssCabecera}"
+    />
 </head>
 <body>
-<th:block th:replace="~{/Fragmentos/cabeceraRegistro}"/>
-    <form action="/RegistroPorPasos/DatosProfesionales" method="post" th:object="${usuario}">
-        <fieldset>
-            <legend>Datos Profesionales</legend>
-            <!------------------------------------------------------------------>
-            <label
-                    th:for="departamento"
-                    th:text="#{etiqueta_departamento}"
+<th:block
+        th:replace="~{/Fragmentos/cabeceraRegistro}"
+/>
+<form
+        action="/RegistroPorPasos/DatosProfesionales"
+        method="post"
+        th:object="${usuario}"
+>
+    <fieldset>
+        <legend>
+            Datos Profesionales
+        </legend>
+        <!------------------------------------------------------------------>
+        <label
+                th:for="departamento"
+                th:text="#{etiqueta_departamento}"
+        />
+        <select
+                th:field="*{departamento}"
+        >
+            <option
+                    th:each="departamento : ${lista_departamentos}"
+                    th:id="${departamento}"
+                    th:value="${departamento}"
+                    th:text="${departamento}"
             />
-            <select
-                    th:field="*{departamento}"
-            >
-                <option
-                        th:each="departamento : ${lista_departamentos}"
-                        th:id="${departamento}"
-                        th:value="${departamento}"
-                        th:text="${departamento}"
-                />
-            </select>
-            <br/>
-            <!------------------------------------------------------------------>
-            <label
-                    th:for="salario"
-                    th:text="#{etiqueta_salario}"
+        </select>
+        <br/>
+        <!------------------------------------------------------------------>
+        <label
+                th:for="salario"
+                th:text="#{etiqueta_salario}"
+        />
+        <input
+                type="text"
+                th:field="*{salario}"
+        />
+        <th:block
+                th:each="error : ${#fields.errors('salario')}"
+                class="error"
+        >
+            <span
+                    th:text="${error}+' '"
+                    class="error"
             />
-            <input
-                    type="text"
-                    th:field="*{salario}"
-            />
-            <th:block th:each="error : ${#fields.errors('salario')}" class="error">
-                <span th:text="${error}+' '" class="error"/>
-            </th:block>
-            <br/>
-            <!------------------------------------------------------------------>
-            <label
-                    th:for="comentarios"
-                    th:text="#{etiqueta_comentarios}"
-            />
-            <textarea th:field="*{comentarios}">
-            </textarea>
-            <br/>
-        </fieldset>
-        <input type="submit" value="Grabar información e ir al resumen">
-    </form>
+        </th:block>
+        <br/>
+        <!------------------------------------------------------------------>
+        <label
+                th:for="comentarios"
+                th:text="#{etiqueta_comentarios}"
+        />
+        <textarea
+                th:field="*{comentarios}"
+        >
+        </textarea>
+        <br/>
+    </fieldset>
+    <input
+            type="submit"
+            value="Grabar información e ir al resumen"
+    />
+</form>
 </body>
 </html>

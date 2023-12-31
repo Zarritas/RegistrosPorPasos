@@ -10,6 +10,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 @Controller
 @RequestMapping("InicioSesion")
 public class ControladorInicioSesion {
@@ -17,17 +21,31 @@ public class ControladorInicioSesion {
     ServicioImpl mi_servicio;
     //--Usuario--------------------------------------------------------------------------------
     @GetMapping("Usuario")
-    public String usuarioGet(){
+    public String usuarioGet(Model modelo,
+                             ArrayList<String> usuarios_registrados,
+                             @CookieValue(value = "usuario_cookie", defaultValue = "") String contenidoCookie){
+        if (!contenidoCookie.isEmpty()) {
+            String[] partes = contenidoCookie.split("#");
+            for (String parte : partes) {
+                String[] datos = parte.split(":");
+                usuarios_registrados.add(datos[0]);
+            }
+            modelo.addAttribute("usuarios_registrados", usuarios_registrados);
+        }
         return "Login/usuario";
     }
     @PostMapping("Usuario")
     public String usuarioPost(HttpSession session,
-                              @RequestParam String usuario){
-        if (mi_servicio.devuelveUsuarios().containsKey(usuario)) {
-            session.setAttribute("usuario", usuario);
-            return "redirect:/InicioSesion/Clave";
+                              @RequestParam String usuario,
+                              @RequestParam(value = "usuarios_registrados",required = false) String usuarios_registrados){
+        if (usuario.isEmpty())
+            usuario = usuarios_registrados;
+
+        if (!mi_servicio.devuelveUsuarios().containsKey(usuario)) {
+            return "redirect:/InicioSesion/Usuario";
         }
-        return "redirect:/InicioSesion/Usuario";
+        session.setAttribute("usuario", usuario);
+        return "redirect:/InicioSesion/Clave";
     }
     //--Contraseña--------------------------------------------------------------------------------
     @GetMapping("Clave")
@@ -50,14 +68,16 @@ public class ControladorInicioSesion {
                                   @CookieValue(name = "usuario_cookie", defaultValue = "") String contenidoCookie,
                                   HttpServletResponse respuestaHttp){
         Usuario usuario = mi_servicio.devuelveUsuarios().get((String) session.getAttribute("usuario"));
-        if (contenidoCookie.isEmpty()){
-            contenidoCookie += session.getAttribute("usuario") + ":1#";
-            session.setAttribute((String) session.getAttribute("usuario"), 1);
-        }else {
-            contenidoCookie = MetodosVarios.comprobarCookie(contenidoCookie, session);
-        }
-        respuestaHttp.addCookie(new Cookie("usuario_cookie", contenidoCookie));
         modelo.addAttribute("usuario", usuario);
+
+        if (contenidoCookie.isEmpty()){
+            contenidoCookie += session.getAttribute("usuario") + ":0#";
+            session.setAttribute((String) session.getAttribute("usuario"), 0);
+        }
+
+        contenidoCookie = MetodosVarios.comprobarCookie(contenidoCookie, session);
+
+        respuestaHttp.addCookie(new Cookie("usuario_cookie", contenidoCookie));
         modelo.addAttribute("nombre_usuario", session.getAttribute("usuario"));
         modelo.addAttribute("contador", session.getAttribute((String) session.getAttribute("usuario")));
         return "Login/areaPersonal";

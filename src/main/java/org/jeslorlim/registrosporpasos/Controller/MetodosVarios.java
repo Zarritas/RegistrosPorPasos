@@ -1,12 +1,11 @@
 package org.jeslorlim.registrosporpasos.Controller;
 
 import jakarta.servlet.http.HttpSession;
+import org.jeslorlim.registrosporpasos.Model.Colecciones;
 import org.jeslorlim.registrosporpasos.Model.Usuario;
+import org.springframework.validation.ObjectError;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public interface MetodosVarios {
 
@@ -37,6 +36,12 @@ public interface MetodosVarios {
             contenidoAux += usuario.getKey() + ":" + usuario.getValue() + "#";
             session.setAttribute(usuario.getKey(), usuario.getValue());
         }
+        session.setAttribute("usuarios_registrados", usuarios);
         return contenidoAux;
+    }
+    public static void quitarDuplicados() {
+        HashSet<ObjectError> misErrores = new HashSet<>(Colecciones.getListaErrores());
+        Colecciones.limpiarErrores();
+        Colecciones.agregarErrores(misErrores);
     }
 }

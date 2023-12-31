@@ -1,50 +1,73 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:Th="http://www.w3.org/1999/html">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Datos Bancarios</title>
+    <title>Datos Usuario</title>
     <th:block th:replace="~{/Fragmentos/CssCabecera}"/>
 </head>
 <body>
-<th:block th:replace="~{/Fragmentos/cabeceraRegistro}"/>
-    <form action="/RegistroPorPasos/DatosUsuario" method="post" th:object="${usuario}">
-        <fieldset>
-            <legend>Datos Usuario</legend>
-            <!------------------------------------------------------------------>
-            <label
-                    th:for="nombre"
-                    th:text="#{etiqueta_nombre}"
+<th:block
+        th:replace="~{/Fragmentos/cabeceraRegistro}"
+/>
+<form
+        action="/RegistroPorPasos/DatosUsuario"
+        method="post"
+        th:object="${usuario}"
+>
+    <fieldset>
+        <legend>
+            Datos Usuario
+        </legend>
+        <!------------------------------------------------------------------>
+        <label
+                th:for="nombre"
+                th:text="#{etiqueta_nombre}"
+        />
+        <input
+                type="text"
+                th:field="*{nombre}"
+        />
+        <th:block
+                th:each="error : ${#fields.errors('nombre')}"
+                class="error"
+        >
+            <span
+                    th:text="${error}+' '"
+                    class="error"
             />
-            <input
-                    type="text"
-                    th:field="*{nombre}"
+        </th:block>
+        <br/>
+        <label
+                th:for="clave"
+                th:text="#{etiqueta_clave}"
+        />
+        <input
+                type="password"
+                th:field="*{clave}"
+        />
+        <br/>
+        <label
+                th:for="confirmarClave"
+                th:text="#{etiqueta_confirmarClave}"
+        />
+        <input
+                type="password"
+                th:field="*{confirmarClave}"
+        />
+        <th:block
+                th:each="error : ${#fields.errors('clave')}"
+                class="error"
+        >
+            <span
+                    th:text="${error}+' '"
+                    class="error"
             />
-            <th:block th:each="error : ${#fields.errors('nombre')}" class="error">
-                <span th:text="${error}+' '" class="error"/>
-            </th:block>
-            <br/>
-            <label
-                    th:for="clave"
-                    th:text="#{etiqueta_clave}"
-            />
-            <input
-                    type="password"
-                    th:field="*{clave}"
-            />
-            <br/>
-            <label
-                    th:for="confirmarClave"
-                    th:text="#{etiqueta_confirmarClave}"
-            />
-            <input
-                    type="password"
-                    th:field="*{confirmarClave}"
-            />
-            <th:block th:each="error : ${#fields.errors('clave')}" class="error">
-                <span th:text="${error}+' '" class="error"/>
-            </th:block>
-        </fieldset>
-        <input type="submit" value="Grabar información e ir al paso 2 - Datos personales"/>
-    </form>
+        </th:block>
+    </fieldset>
+    <input
+            type="submit"
+            value="Grabar información e ir al paso 2 - Datos personales"
+    />
+</form>
 </body>
 </html>

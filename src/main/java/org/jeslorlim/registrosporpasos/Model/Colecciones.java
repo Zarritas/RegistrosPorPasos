@@ -2,11 +2,9 @@ package org.jeslorlim.registrosporpasos.Model;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.validation.ObjectError;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Setter
 public class Colecciones {
@@ -40,9 +38,22 @@ public class Colecciones {
         listaNacionalidades.add("Italiana");
         listaNacionalidades.add("Portuguesa");
     }}
+
     @Getter
     private static Map<String,Usuario> Mapa_usuarios = new HashMap<>();
     public static void agregarUsuario(Usuario usuario){
         Mapa_usuarios.put(usuario.getNombre(), usuario);
+    }
+    public static void limpiarUsuarios() {
+        Mapa_usuarios.clear();
+    }
+
+    @Getter
+    private static Set<ObjectError> listaErrores = new HashSet<>();
+    public static void limpiarErrores(){
+        listaErrores.clear();
+    }
+    public static void agregarErrores(HashSet<ObjectError> allErrors) {
+        listaErrores.addAll(allErrors);
     }
 }

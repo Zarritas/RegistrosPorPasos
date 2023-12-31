@@ -23,9 +23,9 @@ public class Usuario {
     @NotBlank(groups = GrupoDatosUsuario.class)
     @NotExist(groups = GrupoDatosUsuario.class)
     String nombre;
-    @NotNull(groups = GrupoDatosUsuario.class)
+    @NotBlank(groups = GrupoDatosUsuario.class)
     String clave;
-    @NotNull(groups = GrupoDatosUsuario.class)
+    @NotBlank(groups = GrupoDatosUsuario.class)
     String confirmarClave;
     public void agrergarDatosUsuario(Usuario datosUsuario) {
         this.setNombre(datosUsuario.getNombre());
@@ -38,11 +38,13 @@ public class Usuario {
     String apellido;
     @DateTimeFormat(pattern = "dd/MM/yyyy")
     @Mayor18Anios(groups = GrupoDatosPersonales.class)
+    @NotNull(groups = GrupoDatosPersonales.class)
     LocalDate fechaNacimiento;
     int edad;
     String genero;
     boolean casado;
     boolean hijos;
+    @NotNull(groups = GrupoDatosPersonales.class)
     @AlmenosDos(groups = GrupoDatosPersonales.class)
     ArrayList<String> nacionalidades;
     public void agrergarDatosPersonales(Usuario datosPersonales) {

@@ -2,15 +2,36 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
-    <th:block th:replace="~{/Fragmentos/CssCabecera}"/>
+    <title>Login</title>
+    <th:block
+            th:replace="~{/Fragmentos/CssCabecera}"
+    />
 </head>
 <body>
-<th:block th:replace="~{/Fragmentos/cabeceraLogin}"/>
-<h1>Autenticación</h1>
-<form action="/InicioSesion/Clave" method="post">
-    <input type="password" name="clave" id="clave">
-    <input type="submit" value="Iniciar Sesión">
+<th:block
+        th:replace="~{/Fragmentos/cabeceraLogin}"
+/>
+<h1>
+    Autenticación
+</h1>
+<form
+        action="/InicioSesion/Clave"
+        method="post"
+>
+    <label
+            for="clave"
+            th:text="#{etiqueta_clave}"
+    />
+    <input
+            type="password"
+            name="clave"
+            id="clave"
+    />
+    <br/>
+    <input
+            type="submit"
+            value="Iniciar Sesión"
+    />
 </form>
 </body>
 </html>

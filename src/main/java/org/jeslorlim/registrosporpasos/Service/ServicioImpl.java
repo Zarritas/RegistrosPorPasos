@@ -3,9 +3,11 @@ package org.jeslorlim.registrosporpasos.Service;
 import org.jeslorlim.registrosporpasos.Model.Colecciones;
 import org.jeslorlim.registrosporpasos.Model.Usuario;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.ObjectError;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 @Service
 public class ServicioImpl implements Servicio{
@@ -31,4 +33,9 @@ public class ServicioImpl implements Servicio{
 
     @Override
     public Map<String,Usuario> devuelveUsuarios() {return Colecciones.getMapa_usuarios();}
+
+    @Override
+    public Set<ObjectError> devuelveErrores() {
+        return Colecciones.getListaErrores();
+    }
 }

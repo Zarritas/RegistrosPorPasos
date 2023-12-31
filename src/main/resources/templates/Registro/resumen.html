@@ -6,29 +6,128 @@
     <th:block th:replace="~{/Fragmentos/CssCabecera}"/>
 </head>
 <body>
-<th:block th:replace="~{/Fragmentos/cabeceraRegistro}"/>
-    <form th:object="${usuario}">
-        <fieldset>
-            <legend>Datos Usuario</legend>
-            <div th:text="#{etiqueta_nombre}+' '+*{nombre}"></div>
-            <div th:text="#{etiqueta_clave}+' '+*{clave}"></div>
-        </fieldset>
-        <fieldset>
-            <legend>Datos personales</legend>
-            <div th:text="#{etiqueta_tratamiento}+' '+*{tratamiento_deseado}"></div>
-            <div th:text="#{etiqueta_apellidos}+' '+*{getApellido}"></div>
-            <div th:text="#{etiqueta_fechaNacimiento}+' '+*{fechaNacimiento}"></div>
-            <div th:text="#{etiqueta_edad}+' '+*{edad}"></div>
-            <div th:text="#{etiqueta_nacionalidades}+' '+*{nacionalidades}"></div>
-        </fieldset>
-        <fieldset>
-            <legend>Datos profesionales</legend>
-            <div th:text="#{etiqueta_departamento}+' '+*{departamento}"></div>
-            <div th:text="#{etiqueta_salario}+' '+*{salario}"></div>
-            <div th:text="#{etiqueta_comentarios}+' '+*{comentarios}"></div>
-        </fieldset>
-
-        <a href="VueltaInicio">Volver a la pagina principal</a>
-    </form>
+<th:block
+        th:replace="~{/Fragmentos/cabeceraRegistro}"
+/>
+<th:block
+        th:object="${usuario}"
+>
+    <fieldset>
+        <legend>
+            Datos Usuario
+        </legend>
+        <div>
+            <th:block
+                    th:text="#{etiqueta_nombre}+' '+*{nombre}"
+            />
+            <th:block
+                    th:each="error : ${#fields.errors('nombre')}"
+                    class="error"
+            >
+                    <span
+                            th:text="${error}+' '"
+                            class="error"
+                    />
+            </th:block>
+        </div>
+        <div>
+            <th:block
+                    th:text="#{etiqueta_clave}+' '+*{clave}"
+            />
+            <th:block
+                    th:each="error : ${#fields.errors('clave')}"
+                    class="error"
+            >
+                    <span
+                            th:text="${error}+' '"
+                            class="error"
+                    />
+            </th:block>
+        </div>
+    </fieldset>
+    <fieldset>
+        <legend>
+            Datos personales
+        </legend>
+        <div
+                th:text="#{etiqueta_tratamiento}+' '+*{tratamiento_deseado}"
+        />
+        <div
+                th:text="#{etiqueta_apellidos}+' '+*{getApellido}"
+        />
+        <div>
+            <th:block
+                    th:text="#{etiqueta_fechaNacimiento}+' '+*{fechaNacimiento}"
+            />
+            <th:block
+                    th:each="error : ${#fields.errors('fechaNacimiento')}"
+                    class="error"
+            >
+                <span
+                        th:text="${error}+' '"
+                        class="error"
+                />
+            </th:block>
+        </div>
+        <div
+                th:text="#{etiqueta_edad}+' '+*{edad}"
+        />
+        <div>
+            <th:block
+                    th:text="#{etiqueta_nacionalidades}+' '+*{nacionalidades}"
+            />
+            <th:block
+                    th:each="error : ${#fields.errors('nacionalidades')}"
+                    class="error"
+            >
+                    <span
+                            th:text="${error}+' '"
+                            class="error"
+                    />
+            </th:block>
+        </div>
+    </fieldset>
+    <fieldset>
+        <legend>
+            Datos profesionales
+        </legend>
+        <div
+                th:text="#{etiqueta_departamento}+' '+*{departamento}"
+        />
+        <div>
+            <th:block
+                    th:text="#{etiqueta_salario}+' '+*{salario}"
+            />
+            <th:block
+                    th:each="error : ${#fields.errors('salario')}"
+                    class="error"
+            >
+                <span
+                        th:text="${error}+' '"
+                        class="error"
+                />
+            </th:block>
+        </div>
+        <div
+                th:text="#{etiqueta_comentarios}+' '+*{comentarios}"
+        />
+    </fieldset>
+    <a
+            href="NuevoUsuario"
+    >
+        <img
+                th:src="@{/imagenes/Registro.jpg}"
+                alt="Añadir usuario nuevo"
+        />
+    </a>
+    <a
+            href="VueltaInicio"
+    >
+        <img
+                th:src="@{/imagenes/limpiar.png}"
+                alt="Limpiar Formulario"
+        />
+    </a>
+</th:block>
 </body>
 </html>
