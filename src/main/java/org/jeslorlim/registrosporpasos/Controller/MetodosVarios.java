@@ -4,7 +4,9 @@ import jakarta.servlet.http.HttpSession;
 import org.jeslorlim.registrosporpasos.Model.Usuario;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public interface MetodosVarios {
 
@@ -19,28 +21,21 @@ public interface MetodosVarios {
             usuario.agrergarDatosProfesionales((Usuario) session.getAttribute("DatosProfesionales"));
         }
     }
-
     public static String comprobarCookie(String contenido, HttpSession session) {
-        String[] partes = contenido.split("#");
-        String parteAux="";
-        String contenidoAux="";
-        for (int i = 0; i < partes.length; i++) {
-            String[] datos = partes[i].split(":");
-            if (session.getAttribute("usuario").equals(datos[0])) {
-                datos[1] = String.valueOf(Integer.parseInt(datos[1]) + 1);
-                session.setAttribute((String) session.getAttribute("usuario"), datos[1]);
-                partes[i] = datos[0] + ":" + datos[1];
-            }else {
-                parteAux = session.getAttribute("usuario") + ":1"; ;
-                session.setAttribute((String) session.getAttribute("usuario"), 1);
-            }
+        String contenidoAux = "";
+        Map<String, Integer> usuarios = new HashMap<>();
+        for (String parte : contenido.split("#")) {
+            String[] datos = parte.split(":");
+            usuarios.put(datos[0], Integer.parseInt(datos[1]));
         }
-        if (parteAux.isEmpty()) {
-            for (String parte : partes) {
-                contenidoAux += parte + "#";
-            }
-        }else{
-            contenidoAux = contenido + parteAux + "#";
+        if (!usuarios.containsKey((String) session.getAttribute("usuario"))) {
+            usuarios.put((String) session.getAttribute("usuario"), 1);
+        }else {
+            usuarios.put((String) session.getAttribute("usuario"), usuarios.get((String) session.getAttribute("usuario")) + 1);
+        }
+        for (Map.Entry<String, Integer> usuario : usuarios.entrySet()) {
+            contenidoAux += usuario.getKey() + ":" + usuario.getValue() + "#";
+            session.setAttribute(usuario.getKey(), usuario.getValue());
         }
         return contenidoAux;
     }
