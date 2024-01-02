@@ -39,9 +39,4 @@ public interface MetodosVarios {
         session.setAttribute("usuarios_registrados", usuarios);
         return contenidoAux;
     }
-    public static void quitarDuplicados() {
-        HashSet<ObjectError> misErrores = new HashSet<>(Colecciones.getListaErrores());
-        Colecciones.limpiarErrores();
-        Colecciones.agregarErrores(misErrores);
-    }
 }

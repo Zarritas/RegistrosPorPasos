@@ -49,11 +49,12 @@ public class Colecciones {
     }
 
     @Getter
-    private static Set<ObjectError> listaErrores = new HashSet<>();
+    private static Map<String,ObjectError> listaErrores = new HashMap<>();
+    public static void agregarError(String campo, ObjectError error) {
+        listaErrores.put(campo, error);
+    }
     public static void limpiarErrores(){
         listaErrores.clear();
     }
-    public static void agregarErrores(HashSet<ObjectError> allErrors) {
-        listaErrores.addAll(allErrors);
-    }
+
 }

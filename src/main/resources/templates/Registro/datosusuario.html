@@ -45,6 +45,15 @@
                 type="password"
                 th:field="*{clave}"
         />
+        <th:block
+                th:each="error : ${#fields.errors('clave')}"
+                class="error"
+        >
+            <span
+                    th:text="${error}+' '"
+                    class="error"
+            />
+        </th:block>
         <br/>
         <label
                 th:for="confirmarClave"
@@ -55,7 +64,7 @@
                 th:field="*{confirmarClave}"
         />
         <th:block
-                th:each="error : ${#fields.errors('clave')}"
+                th:each="error : ${#fields.errors('confirmarClave')}"
                 class="error"
         >
             <span

@@ -7,7 +7,6 @@ import org.springframework.validation.ObjectError;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 @Service
 public class ServicioImpl implements Servicio{
@@ -35,7 +34,7 @@ public class ServicioImpl implements Servicio{
     public Map<String,Usuario> devuelveUsuarios() {return Colecciones.getMapa_usuarios();}
 
     @Override
-    public Set<ObjectError> devuelveErrores() {
+    public Map<String, ObjectError> devuelveErrores() {
         return Colecciones.getListaErrores();
     }
 }

@@ -25,7 +25,6 @@ public class Usuario {
     String nombre;
     @NotBlank(groups = GrupoDatosUsuario.class)
     String clave;
-    @NotBlank(groups = GrupoDatosUsuario.class)
     String confirmarClave;
     public void agrergarDatosUsuario(Usuario datosUsuario) {
         this.setNombre(datosUsuario.getNombre());

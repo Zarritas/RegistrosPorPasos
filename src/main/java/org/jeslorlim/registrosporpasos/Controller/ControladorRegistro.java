@@ -17,15 +17,13 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.util.HashSet;
-
 @Controller
 @RequestMapping("RegistroPorPasos")
 public class ControladorRegistro {
     @Autowired
     ServicioImpl mi_servicio;
 
-//--Datos Usuario-------------------------------------------------------------------------------
+    //--Datos Usuario-------------------------------------------------------------------------------
     @GetMapping("DatosUsuario")
     public String datosUsuarioGet(HttpSession session,
                                   @ModelAttribute("usuario") Usuario usuario,
@@ -35,15 +33,22 @@ public class ControladorRegistro {
         }
 
         if (!mi_servicio.devuelveErrores().isEmpty()){
-            MetodosVarios.quitarDuplicados();
-            for (ObjectError error : mi_servicio.devuelveErrores()) {
-                if (error.getCodes()[1].contains("ValidarClave")) {
-                    resultadoVinculadoParametros.addError(new FieldError("usuario", "clave", "Las claves no coinciden."));
+            for (ObjectError error : mi_servicio.devuelveErrores().values()) {
+                if (error.getCodes() != null && error.getCodes()[1].contains("ValidarClave")) {
+                    resultadoVinculadoParametros.addError(new FieldError("usuario", "confirmarClave", "Las claves no coinciden."));
                 }else {
                     resultadoVinculadoParametros.addError(error);
                 }
             }
 
+
+            for (ObjectError error : resultadoVinculadoParametros.getAllErrors()) {
+                if (error.getCodes() != null && error.getCodes()[1].contains("ValidarClave")) {
+                    Colecciones.getListaErrores().remove("confirmarClave");
+                }else if (mi_servicio.devuelveErrores().containsKey(((FieldError) error).getField())) {
+                    Colecciones.getListaErrores().remove(((FieldError) error).getField());
+                }
+            }
         }
 
         return "Registro/datosusuario";
@@ -53,10 +58,14 @@ public class ControladorRegistro {
                                    @Validated({GrupoDatosUsuario.class}) @ModelAttribute("usuario") Usuario usuario,
                                    BindingResult resultadoVinculadoParametros){
         if (resultadoVinculadoParametros.hasErrors()) {
-            Colecciones.agregarErrores(new HashSet<>(resultadoVinculadoParametros.getAllErrors()));
+            for (ObjectError error : resultadoVinculadoParametros.getAllErrors())
+                if (error.getCodes() != null && error.getCodes()[1].contains("ValidarClave")) {
+                    Colecciones.agregarError("confirmarClave", error);
+                }else {
+                    Colecciones.agregarError(((FieldError)error).getField(), error);
+                }
             return "redirect:/RegistroPorPasos/DatosUsuario";
         }else {
-            Colecciones.limpiarErrores();
             session.setAttribute("DatosUsuario", usuario);
             return "redirect:/RegistroPorPasos/DatosPersonales";
         }
@@ -71,10 +80,18 @@ public class ControladorRegistro {
         if (session.getAttribute("DatosPersonales") != null)
             usuario.agrergarDatosPersonales((Usuario) session.getAttribute("DatosPersonales"));
 
-        if (!mi_servicio.devuelveErrores().isEmpty()){
-            MetodosVarios.quitarDuplicados();
-            for (ObjectError error : mi_servicio.devuelveErrores()) {
-                resultadoVinculadoParametros.addError(error);
+        if (!mi_servicio.devuelveErrores().isEmpty()) {
+            for (ObjectError error : mi_servicio.devuelveErrores().values()) {
+                if (error.getCodes() != null && error.getCodes()[1].contains("ValidarClave")) {
+                    resultadoVinculadoParametros.addError(new FieldError("usuario", "confirmarClave", "Las claves no coinciden."));
+                } else {
+                    resultadoVinculadoParametros.addError(error);
+                }
+            }
+            for (ObjectError error2 : resultadoVinculadoParametros.getAllErrors()) {
+                if (mi_servicio.devuelveErrores().containsKey(((FieldError) error2).getField())) {
+                    Colecciones.getListaErrores().remove(((FieldError) error2).getField());
+                }
             }
         }
 
@@ -89,10 +106,11 @@ public class ControladorRegistro {
                                       @Validated({GrupoDatosPersonales.class}) @ModelAttribute("usuario") Usuario usuario,
                                       BindingResult resultadoVinculadoParametros) {
         if (resultadoVinculadoParametros.hasErrors()){
-            Colecciones.agregarErrores(new HashSet<>(resultadoVinculadoParametros.getAllErrors()));
+            for (ObjectError error : resultadoVinculadoParametros.getAllErrors()) {
+                Colecciones.agregarError(((FieldError)error).getField(), error);
+            }
             return "redirect:/RegistroPorPasos/DatosPersonales";
         }else{
-            Colecciones.limpiarErrores();
             session.setAttribute("DatosPersonales", usuario);
             return "redirect:/RegistroPorPasos/DatosProfesionales";
         }
@@ -109,10 +127,18 @@ public class ControladorRegistro {
         if (session.getAttribute("DatosProfesionales") != null)
             usuario.agrergarDatosProfesionales((Usuario) session.getAttribute("DatosProfesionales"));
 
-        if (!mi_servicio.devuelveErrores().isEmpty()){
-            MetodosVarios.quitarDuplicados();
-            for (ObjectError error : mi_servicio.devuelveErrores()) {
-                resultadoVinculadoParametros.addError(error);
+        if (!mi_servicio.devuelveErrores().isEmpty()) {
+            for (ObjectError error : mi_servicio.devuelveErrores().values()) {
+                if (error.getCodes() != null && error.getCodes()[1].contains("ValidarClave")) {
+                    resultadoVinculadoParametros.addError(new FieldError("usuario", "confirmarClave", "Las claves no coinciden."));
+                } else {
+                    resultadoVinculadoParametros.addError(error);
+                }
+            }
+            for (ObjectError error2 : resultadoVinculadoParametros.getAllErrors()) {
+                if (mi_servicio.devuelveErrores().containsKey(((FieldError) error2).getField())) {
+                    Colecciones.getListaErrores().remove(((FieldError) error2).getField());
+                }
             }
         }
 
@@ -125,10 +151,11 @@ public class ControladorRegistro {
                                          @Validated({GrupoDatosProfesionales.class}) @ModelAttribute("usuario") Usuario usuario,
                                          BindingResult resultadoVinculadoParametros){
         if (resultadoVinculadoParametros.hasErrors()) {
-            Colecciones.agregarErrores(new HashSet<>(resultadoVinculadoParametros.getAllErrors()));
+            for (ObjectError error : resultadoVinculadoParametros.getAllErrors()) {
+                Colecciones.agregarError(((FieldError)error).getField(), error);
+            }
             return "redirect:/RegistroPorPasos/DatosProfesionales";
         }else {
-            Colecciones.limpiarErrores();
             session.setAttribute("DatosProfesionales", usuario);
             return "redirect:/RegistroPorPasos/Resumen";
         }
@@ -148,9 +175,7 @@ public class ControladorRegistro {
                 session.getAttribute("DatosProfesionales") != null &&
                 session.getAttribute("DatosUsuario") != null){
             Colecciones.agregarUsuario(usuario);
-        }
-        if(usuario.getFechaNacimiento() == null){
-            resultadoVinculadoParametros.addError(new FieldError("usuario", "fechaNacimiento", "Campo obligatorio"));
+            Colecciones.limpiarErrores();
         }
         if(usuario.getNombre() == null){
             resultadoVinculadoParametros.addError(new FieldError("usuario", "nombre", "Campo obligatorio"));
@@ -158,11 +183,17 @@ public class ControladorRegistro {
         if(usuario.getClave() == null){
             resultadoVinculadoParametros.addError(new FieldError("usuario", "clave", "Campo obligatorio"));
         }
+        if(usuario.getFechaNacimiento() == null){
+            resultadoVinculadoParametros.addError(new FieldError("usuario", "fechaNacimiento", "Campo obligatorio"));
+        }
         if(usuario.getNacionalidades() == null || usuario.getNacionalidades().isEmpty() || usuario.getNacionalidades().size() < 2){
             resultadoVinculadoParametros.addError(new FieldError("usuario", "nacionalidades", "Campo obligatorio"));
         }
         if(usuario.getSalario() == 0.0){
             resultadoVinculadoParametros.addError(new FieldError("usuario", "salario", "Campo obligatorio"));
+        }
+        for (ObjectError error : resultadoVinculadoParametros.getAllErrors()) {
+            Colecciones.agregarError(((FieldError)error).getField(), error);
         }
         return "Registro/resumen";
     }
