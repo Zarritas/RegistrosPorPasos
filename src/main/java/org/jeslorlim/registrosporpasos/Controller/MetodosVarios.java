@@ -1,9 +1,7 @@
 package org.jeslorlim.registrosporpasos.Controller;
 
 import jakarta.servlet.http.HttpSession;
-import org.jeslorlim.registrosporpasos.Model.Colecciones;
 import org.jeslorlim.registrosporpasos.Model.Usuario;
-import org.springframework.validation.ObjectError;
 
 import java.util.*;
 
