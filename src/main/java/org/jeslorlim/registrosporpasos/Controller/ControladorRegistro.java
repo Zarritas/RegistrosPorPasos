@@ -1,6 +1,10 @@
 package org.jeslorlim.registrosporpasos.Controller;
 
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.Validation;
+import jakarta.validation.Validator;
+import jakarta.validation.ValidatorFactory;
 import org.jeslorlim.registrosporpasos.Model.Colecciones;
 import org.jeslorlim.registrosporpasos.Model.Usuario;
 import org.jeslorlim.registrosporpasos.Service.ServicioImpl;
@@ -8,14 +12,14 @@ import org.jeslorlim.registrosporpasos.Validations.Groups.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
-import org.springframework.validation.ObjectError;
+import org.springframework.validation.*;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.util.Set;
 
 @Controller
 @RequestMapping("RegistroPorPasos")
@@ -167,16 +171,22 @@ public class ControladorRegistro {
                           @ModelAttribute("usuario") Usuario usuario,
                           BindingResult resultadoVinculadoParametros){
 
+
+
+
         if (session.isNew()){
             return "Registro/resumen";
         }
         MetodosVarios.agregarUsuarios(session, usuario);
-        if (session.getAttribute("DatosPersonales") != null &&
-                session.getAttribute("DatosProfesionales") != null &&
-                session.getAttribute("DatosUsuario") != null){
-            Colecciones.agregarUsuario(usuario);
-            Colecciones.limpiarErrores();
-        }
+
+//        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+//        Validator validator = factory.getValidator();
+//        Set<ConstraintViolation<Usuario>> violations =
+//                validator.validate(usuario, GrupoDatosPersonales.class, GrupoDatosProfesionales.class,GrupoDatosUsuario.class);
+//
+//        for (ConstraintViolation<Usuario> violation : violations) {
+//            resultadoVinculadoParametros.addError(new ObjectError("usuario", violation.getMessage()));
+//        }
         if(usuario.getNombre() == null){
             resultadoVinculadoParametros.addError(new FieldError("usuario", "nombre", "Campo obligatorio"));
         }
@@ -200,14 +210,20 @@ public class ControladorRegistro {
     @GetMapping("VueltaInicio")
     public String Limpiar(HttpSession session){
         session.invalidate();
-        Colecciones.limpiarUsuarios();
         Colecciones.limpiarErrores();
         return "redirect:/RegistroPorPasos/DatosUsuario";
     }
     @GetMapping("NuevoUsuario")
-    public String nuevoUsuario(HttpSession session){
-        session.invalidate();
-        Colecciones.limpiarErrores();
-        return "redirect:/RegistroPorPasos/DatosUsuario";
+    public String nuevoUsuario(HttpSession session, Usuario usuario){
+        MetodosVarios.agregarUsuarios(session, usuario);
+        if (session.getAttribute("DatosPersonales") != null &&
+                session.getAttribute("DatosProfesionales") != null &&
+                session.getAttribute("DatosUsuario") != null){
+            Colecciones.agregarUsuario(usuario);
+            Colecciones.limpiarErrores();
+            session.invalidate();
+            return "redirect:/RegistroPorPasos/DatosUsuario";
+        }
+        return "redirect:/RegistroPorPasos/Resumen";
     }
 }

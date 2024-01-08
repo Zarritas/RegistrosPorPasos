@@ -44,10 +44,6 @@ public class Colecciones {
     public static void agregarUsuario(Usuario usuario){
         Mapa_usuarios.put(usuario.getNombre(), usuario);
     }
-    public static void limpiarUsuarios() {
-        Mapa_usuarios.clear();
-    }
-
     @Getter
     private static Map<String,ObjectError> listaErrores = new HashMap<>();
     public static void agregarError(String campo, ObjectError error) {
