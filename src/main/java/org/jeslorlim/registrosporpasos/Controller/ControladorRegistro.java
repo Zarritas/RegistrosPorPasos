@@ -1,10 +1,10 @@
 package org.jeslorlim.registrosporpasos.Controller;
 
 import jakarta.servlet.http.HttpSession;
-import jakarta.validation.ConstraintViolation;
-import jakarta.validation.Validation;
-import jakarta.validation.Validator;
-import jakarta.validation.ValidatorFactory;
+//import jakarta.validation.ConstraintViolation;
+//import jakarta.validation.Validation;
+//import jakarta.validation.Validator;
+//import jakarta.validation.ValidatorFactory;
 import org.jeslorlim.registrosporpasos.Model.Colecciones;
 import org.jeslorlim.registrosporpasos.Model.Usuario;
 import org.jeslorlim.registrosporpasos.Service.ServicioImpl;
@@ -19,8 +19,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.util.Set;
-
+@SuppressWarnings("ALL")
 @Controller
 @RequestMapping("RegistroPorPasos")
 public class ControladorRegistro {

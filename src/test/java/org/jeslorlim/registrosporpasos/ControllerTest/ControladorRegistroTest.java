@@ -8,6 +8,10 @@ import com.fasterxml.jackson.databind.cfg.MapperConfig;
 import com.fasterxml.jackson.databind.type.TypeFactory;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.Validation;
+import jakarta.validation.Validator;
+import jakarta.validation.ValidatorFactory;
 import org.jeslorlim.registrosporpasos.Model.Usuario;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +27,7 @@ import java.util.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+@SuppressWarnings("ALL")
 @SpringBootTest
 @AutoConfigureMockMvc
 public class ControladorRegistroTest {
@@ -30,6 +35,7 @@ public class ControladorRegistroTest {
 
     @Autowired
     private MockMvc mockMvc;
+    private Usuario usuario_valido;
 
     @Test
     public void when_sending_DatosUsuario_without_usuario_then_getting_DatosUsuario() throws Exception {
@@ -46,7 +52,6 @@ public class ControladorRegistroTest {
         String textoSolicitud = CONTROLADOR+"/DatosUsuario";
         String nombreVista = "/RegistroPorPasos/DatosPersonales";
 
-        Usuario usuario_valido = new Usuario();
         usuario_valido.setNombre("jesus");
         usuario_valido.setClave("a");
         usuario_valido.setConfirmarClave("a");
@@ -57,22 +62,18 @@ public class ControladorRegistroTest {
     }
 
     @Test
-    public void when_registring_NewUsuario_with_valid_usuario_then_getting_DatosUsuario() throws Exception {
-        String textoSolicitud = CONTROLADOR+"/NuevoUsuario";
+    public void when_post_DatosUsuario_with_error_password_then_getting_DatosUsuario() throws Exception {
+        String textoSolicitud = CONTROLADOR+"/DatosUsuario";
         String nombreVista = "/RegistroPorPasos/DatosUsuario";
 
         Usuario usuario_valido = new Usuario();
+        HttpSession session = new MockHttpSession();
         usuario_valido.setNombre("jesus");
         usuario_valido.setClave("a");
-        usuario_valido.setConfirmarClave("a");
-        HttpSession session = new MockHttpSession();
-        session.setAttribute("DatosUsuario", usuario_valido);
+        usuario_valido.setConfirmarClave("b");
         usuario_valido.setFechaNacimiento(LocalDate.parse("2000-01-01"));
-        usuario_valido.setNacionalidades(new ArrayList<>(Arrays.asList("Española","Francesa")));
-        session.setAttribute("DatosPersonales", usuario_valido);
-        usuario_valido.setSalario(18000);
-        session.setAttribute("DatosProfesionales", usuario_valido);
-        MockHttpServletRequestBuilder builder = get(textoSolicitud).flashAttr("session", session).flashAttr("usuario", usuario_valido);
+
+        MockHttpServletRequestBuilder builder = post(textoSolicitud).flashAttr("usuario", usuario_valido);
         this.mockMvc
                 .perform(builder)
                 .andExpect(redirectedUrl(nombreVista));
