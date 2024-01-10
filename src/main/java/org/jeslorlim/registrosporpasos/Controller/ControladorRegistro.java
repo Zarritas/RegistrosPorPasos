@@ -169,10 +169,6 @@ public class ControladorRegistro {
     public String resumen(HttpSession session,
                           @ModelAttribute("usuario") Usuario usuario,
                           BindingResult resultadoVinculadoParametros){
-
-
-
-
         if (session.isNew()){
             return "Registro/resumen";
         }
