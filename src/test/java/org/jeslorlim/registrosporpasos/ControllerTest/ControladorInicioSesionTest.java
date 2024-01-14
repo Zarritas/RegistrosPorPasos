@@ -40,4 +40,16 @@ public class ControladorInicioSesionTest {
                 .perform(builder)
                 .andExpect(redirectedUrl(nombreVista));
     }
+    @Test
+    public void when_typing_on_Usuario_exist_user_then_get_Usuario() throws Exception {
+        String textoSolicitud = CONTROLADOR+"/Usuario";
+        String nombreVista = "/InicioSesion/Clave";
+
+        MockHttpServletRequestBuilder builder = post(textoSolicitud).param("usuario", "jesus");
+        this.mockMvc
+                .perform(builder)
+                .andExpect(redirectedUrl(nombreVista));
+    }
+
+
 }

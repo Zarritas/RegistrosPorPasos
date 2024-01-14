@@ -27,6 +27,9 @@
             name="usuario"
             id="usuario"
     />
+    <th:block th:each="error : ${#fields.errors('usuario')}">
+        <p th:text="${error}"></p>
+    </th:block>
     <br/>
     <select
             th:name="usuarios_registrados"
